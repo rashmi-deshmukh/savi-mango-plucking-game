@@ -14,41 +14,53 @@ function preload()
 }
 
 function setup(){
-    var canvas = createCanvas(1200,400);
+    var canvas = createCanvas(1200,600);
     engine = Engine.create();
     world = engine.world;
     
     ground = new Box(600,height,1200,20);
     
-    mango1 = new Mango(380,260,70,70);
-    mango2 = new Mango(920,320,70,70);
-    mango3 = new Mango(810,350,70,70);
-    mango4 = new Mango(810,260,70,70);
+    mango1 = new Mango(880,260,50,50);
+    mango2 = new Mango(920,310,50,50);
+    mango3 = new Mango(750,320,50,50);
+    mango4 = new Mango(810,260,50,50);
 
-    //mango5 = new Box(700,240,70,70);
-    tree = new Tree(800,200,400,390);
+    //CREATE FEW MORE MANGOES
+
+
+    tree = new Tree(800,350,400,390);
     
-    rock = new Rock(400,200);
-    sling= new Sling(rock.body, {x:400, y:200});    
+    rock = new Rock(135,515);
+    sling= new Sling(rock.body, {x:140, y:515});    
 }
 
 function draw(){
     background("white");
     Engine.update(engine);
+     
+    ground.display();
+    
+    tree.display();
     
     mango1.display();
     mango2.display();
     mango3.display();
     mango4.display();
 
-    ground.display();
-    
-    tree.display();
-   
-    sling.display();
-    rock.display();    
-    image(boyimg, 100,300,150,150)
 
+    //DISPLAY FEW MORE MANGOES
+    
+    sling.display();
+    
+    rock.display();    
+    collide(rock, mango1)
+    collide(rock, mango2)
+    collide(rock, mango3)
+    collide(rock, mango4)
+
+    //COLLIDE FEW MORE MANGOES
+    
+    image(boyimg, 200,550,150,150)
 }
 
 function keyPressed(){
@@ -70,3 +82,14 @@ function  mouseReleased()
     sling.fly();
 }
 
+function collide(object1,object2){
+   // var A= object2.body.position.x - object1.body.position.x;//wall.x-car.x =50
+    //var B = object1.width/2 + object2.width/2//  25+ 25=50
+
+    if(object2.body.position.x - object1.body.position.x <= object1.width/2 + object2.width/2){
+        Matter.Body.setStatic(object2.body, false)
+    }
+
+
+
+}
